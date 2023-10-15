@@ -1,0 +1,312 @@
+-- Tabla de usuarios
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    nombre_real VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    contrasena_hash VARCHAR(255) NOT NULL,
+    DNI VARCHAR(20) NOT NULL,
+    tipo ENUM('administrador_superior', 'administrador_normal', 'usuario', 'empleado') NOT NULL,
+    fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    codigo_postal VARCHAR(10),
+    numero_telefono VARCHAR(20),
+    estado tinyint(1),
+    UNIQUE (correo)
+);
+-- Tabla de direcciones
+CREATE TABLE direcciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_provincia INT NOT NULL,
+    ciudad_pueblo VARCHAR(255) NOT NULL,
+    codigo_postal VARCHAR(8) NOT NULL,
+    direccion TEXT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_provincia) REFERENCES provincias(id)
+);
+-- Tabla de provincias
+CREATE TABLE provincias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_provincia VARCHAR(20) NOT NULL
+);
+CREATE TABLE opiniones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    calificacion INT NOT NULL,
+    comentario TEXT,
+    fecha_opinion TIMESTAMP NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+-- Tabla de categorías de productos
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_categoria VARCHAR(50) NOT NULL
+);
+
+-- Tabla de talles de productos
+CREATE TABLE talles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_talle VARCHAR(10) NOT NULL
+);
+
+-- Tabla de colores de productos
+CREATE TABLE colores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_color VARCHAR(20) NOT NULL
+);
+-- Tabla de productos
+CREATE TABLE productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL,
+    categoria_id INT NOT NULL,
+    stock_total INT NOT NULL,
+    marca_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id),
+    FOREIGN KEY (marca_id) REFERENCES marcas(id)
+);
+CREATE TABLE marcas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_marca VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE promociones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_promocion VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    tipo ENUM('descuento', 'cupon') NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL
+);
+-- Tabla para manejar combinaciones de productos, talles y colores
+CREATE TABLE combinaciones_productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    producto_id INT NOT NULL,
+    talle_id INT NOT NULL,
+    color_id INT NOT NULL,
+    stock INT NOT NULL,
+    FOREIGN KEY (producto_id) REFERENCES productos(id),
+    FOREIGN KEY (talle_id) REFERENCES talles(id),
+    FOREIGN KEY (color_id) REFERENCES colores(id)
+);
+-- Tabla de descripciones de productos
+CREATE TABLE descripciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    producto_id INT NOT NULL,
+    tipo ENUM('descripcion_corta', 'descripcion_larga') NOT NULL,
+    texto TEXT NOT NULL,
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+-- Tabla de imágenes de productos
+CREATE TABLE imagenes_productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    producto_id INT NOT NULL,
+    url_imagen VARCHAR(200) NOT NULL,
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+-- Tabla de ventas
+CREATE TABLE ventas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    fecha_venta TIMESTAMP NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+-- Tabla de detalle de venta
+CREATE TABLE detalle_venta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    venta_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10) NOT NULL,
+    fecha_compra DATE NOT NULL,  -- Agregar la columna fecha_compra de tipo DATE
+    FOREIGN KEY (venta_id) REFERENCES ventas(id),
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+-- Tabla de carrito de compras
+CREATE TABLE carrito_compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+-- Tabla de detalle de carrito de compras
+CREATE TABLE detalle_carrito (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    carrito_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    FOREIGN KEY (carrito_id) REFERENCES carrito_compras(id),
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+-- Tabla de historial de pedidos
+CREATE TABLE historial_pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    fecha_pedido TIMESTAMP NOT NULL,
+    estado_pedido ENUM('pendiente', 'en_proceso', 'enviado', 'entregado') NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+CREATE TABLE productos_vendidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL, -- Agregar el usuario que realizó la venta
+    fecha_venta TIMESTAMP NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+CREATE TABLE detalle_productos_vendidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    venta_id INT NOT NULL, -- Agregar una referencia a la venta correspondiente
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    FOREIGN KEY (venta_id) REFERENCES productos_vendidos(id),
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+Estructura inicial.
+
+proyecto_web/
+│
+├── app/
+│   ├── clases/
+│   │   ├── Usuario.php
+│   │   ├── Producto.php
+│   │   ├── Carrito.php
+│   │   ├── ...
+│   │
+│   ├── controladores/
+│   │   ├── ControladorUsuario.php
+│   │   ├── ControladorProducto.php
+│   │   ├── ControladorCarrito.php
+│   │   ├── ...
+│   │
+│   ├── modelos/
+│   │   ├── ModeloUsuario.php
+│   │   ├── ModeloProducto.php
+│   │   ├── ModeloCarrito.php
+│   │   ├── ...
+│   │
+│   ├── vistas/
+│       ├── vista_usuario/
+│       │   ├── perfil.php
+│       │   ├── login.php
+│       │   ├── registro.php
+│       │   ├── ...
+│       │
+│       ├── vista_producto/
+│       │   ├── lista_productos.php
+│       │   ├── detalle_producto.php
+│       │   ├── ...
+│       │
+│       ├── vista_carrito/
+│           ├── ver_carrito.php
+│           ├── confirmar_compra.php
+│           ├── ...
+│
+├── config/
+│   ├── base_datos.php
+│   ├── configuracion.php
+│
+├── recursos/
+│   ├── css/
+│   ├── js/
+│   ├── img/
+│
+├── index.php
+├── iniciar_sesion.php
+├── registrar_usuario.php
+├── ...
+│
+├── .htaccess
+├── README.md
+
+Estructura Final.
+
+proyecto_web/
+│
+├── app/
+│   ├── clases/    
+│   |   ├── Address.php
+│   |   ├── Brand.php
+│   |   ├── Cart.php
+│   |   ├── CartDetail.php
+│   |   ├── Category.php
+│   |   ├── Color.php
+│   |   ├── Description.php
+│   |   ├── Opinion.php
+│   |   ├── OrderHistory.php
+│   |   ├── Product.php
+│   |   ├── ProductCombination.php
+│   |   ├── ProductImage.php
+│   |   ├── Promotion.php
+│   |   ├── Province.php
+│   |   ├── Sale.php
+│   |   ├── SaleDetail.php
+│   |   ├── Size.php
+│   |   ├── SoldProduct.php
+│   |   ├── SoldProductDetail.php
+│   |   └── User.php
+│   │
+│   ├── controladores/
+|   |   |   ├── AddressController.php
+|   |   |   ├── BrandController.php
+|   |   |   ├── CartController.php
+|   |   |   ├── CategoryController.php
+|   |   |   ├── ColorController.php
+|   |   |   ├── DescriptionController.php
+|   |   |   ├── OpinionController.php
+|   |   |   ├── ProductController.php
+|   |   |   ├── ProductCombinationController.php
+|   |   |   ├── ProductImageController.php
+|   |   |   ├── PromotionController.php
+|   |   |   ├── ProvinceController.php
+|   |   |   ├── SaleController.php
+|   |   |   ├── SizeController.php
+|   |   |   ├── UserController.php
+│   |
+│   ├── modelos/
+│   │   ├── ModeloUsuario.php
+│   │   ├── ModeloProducto.php
+│   │   ├── ModeloCarrito.php
+│   │   ├── ...
+│   │
+│   ├── vistas/
+│       ├── vista_usuario/
+│       │   ├── perfil.php
+│       │   ├── login.php
+│       │   ├── registro.php
+│       │   ├── ...
+│       │
+│       ├── vista_producto/
+│       │   ├── lista_productos.php
+│       │   ├── detalle_producto.php
+│       │   ├── ...
+│       │
+│       ├── vista_carrito/
+│           ├── ver_carrito.php
+│           ├── confirmar_compra.php
+│           ├── ...
+│
+├── config/
+│   ├── base_datos.php
+│   ├── configuracion.php
+│
+├── recursos/
+│   ├── css/
+│   ├── js/
+│   ├── img/
+│
+├── index.php
+├── iniciar_sesion.php
+├── registrar_usuario.php
+├── ...
+│
+├── .htaccess
+├── README.md
+
+
