@@ -1,6 +1,12 @@
 <?php
 
 class SoldProductDetail {
+        private $db;
+
+    public function __construct() {
+        // Instancia la conexión a la base de datos en el constructor del controlador
+        $this->db = new Database();
+    }
     private $id;
     private $saleId;
     private $productId;

@@ -13,11 +13,7 @@ class UserModel {
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("ssssssssss", $name, $realName, $lastName, $email, $password, $DNI, $type, $postalCode, $phoneNumber, $gender);
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->execute(); // Devuelve true en caso de éxito, false en caso de error
     }
 
     public function updateUser($id, $name, $realName, $lastName, $email, $password, $DNI, $type, $postalCode, $phoneNumber, $gender) {
@@ -27,11 +23,7 @@ class UserModel {
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("ssssssssssi", $name, $realName, $lastName, $email, $password, $DNI, $type, $postalCode, $phoneNumber, $gender, $id);
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->execute(); // Devuelve true en caso de éxito, false en caso de error
     }
 
     public function deleteUser($id) {
@@ -39,11 +31,7 @@ class UserModel {
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $id);
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->execute(); // Devuelve true en caso de éxito, false en caso de error
     }
 
     public function getAllUsers() {

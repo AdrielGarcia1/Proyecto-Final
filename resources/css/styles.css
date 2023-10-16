@@ -1,0 +1,181 @@
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #D19C97;
+    --secondary: #EDF1FF;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #FFFFFF;
+    --dark: #1C1C1C;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "Poppins", sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+/* Estilos para el encabezado */
+header {
+    background-color: var(--primary); /* Utiliza tu color de fondo preferido */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Ajusta el espaciado según tus necesidades */
+}
+
+/* Estilos para el logo */
+.logo img {
+    max-height: 60px; /* Tamaño máximo del logo */
+}
+
+/* Estilos para la sección de búsqueda */
+.search {
+    flex: 1; /* Ocupa todo el espacio restante */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff; /* Color de fondo del área de búsqueda */
+    border-radius: 20px; /* Agrega un borde redondeado */
+}
+    /* Estilos para eliminar el contorno del enfoque en la sección de búsqueda */
+    .search input:focus {
+        outline: none; /* Elimina el contorno */
+    }
+
+
+    .search input {
+        flex: 1; /* Ocupa todo el espacio disponible */
+        border: none;
+        padding: 10px;
+    }
+
+    .search button {
+        background-color: var(--gray-dark); /* Utiliza tu color preferido para el botón de búsqueda */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+/* Cambia el color de fondo y escala el botón al pasar el mouse por encima */
+    .search button:hover {
+       background-color: #FFA07A; /* Color de fondo al pasar el mouse */
+       transform: scale(1.05); /* Escala el botón al pasar el mouse */
+    }
+/* Estilos para los iconos */
+.icons a {
+    margin-left: 20px; /* Espaciado entre los iconos */
+}
+/* Estilos para el menú de opciones */
+/* Estilos para el menú de opciones */
+/* Estilos para el menú de opciones */
+nav {
+    background-color: var(--primary); /* Color de fondo para el menú */
+    color: var(--dark); /* Color de texto en el menú */
+    padding: 10px 0; /* Espaciado interior del menú */
+    text-align: center; /* Centro el texto horizontalmente */
+}
+
+    nav ul {
+        list-style: none; /* Elimina los puntos de la lista */
+        padding: 0;
+        margin: 0;
+    }
+
+        nav ul li {
+            display: inline; /* Muestra los elementos en línea (en una fila) */
+            margin-right: 150px; /* Aumenta el espacio entre elementos del menú */
+        }
+
+            nav ul li a {
+                text-decoration: none; /* Elimina el subrayado de los enlaces */
+                color: inherit; /* Hereda el color de texto del menú */
+                font-weight: bold; /* Texto en negrita */
+            }
+
+                /* Estilos para los enlaces del menú al pasar el mouse por encima */
+                nav ul li a:hover {
+                    text-decoration: none; /* Elimina el subrayado al pasar el mouse */
+                    color: var(--gray); /* Cambia el color de texto al hacer hover */
+                }
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6F6F6F;
+    text-align: left;
+    background-color: #fff;
+}
+/* Estiliza los títulos */
+h1 {
+    color: var(--dark);
+}
+
+/* Estiliza los formularios y etiquetas */
+form, label, input {
+    color: var(--primary);
+}
+
+/* Estiliza los enlaces */
+a {
+    color: var(--dark);
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+    /* Cambia el color de los enlaces al pasar el mouse por encima */
+    a:hover {
+        color: var(--primary); 
+    }
+
+/* Estilos para el botón "Ingresar" */
+.btn-ingresar {
+    display: inline-block;
+    background-color: var(--gray-dark); /* Color de fondo azul */
+    color: #fff; /* Texto en color blanco */
+    border: none; /* Elimina el borde */
+    border-radius: 50px; /* Ajusta el radio para crear una forma redondeada */
+    padding: 10px 20px; /* Ajusta el relleno para cambiar el tamaño del botón */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse por encima */
+    position: relative; /* Cambia la posición a relativa para agregar la nube */
+    display: block; /* Hace que el botón sea un bloque */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+    /* Cambia el color de fondo y escala el botón al pasar el mouse por encima */
+    .btn-ingresar:hover {
+        background-color: #FFA07A; /* Color de fondo al pasar el mouse */
+        transform: scale(1.05); /* Escala el botón al pasar el mouse */
+    }

@@ -1,5 +1,11 @@
 <?php
 class User {
+        private $db;
+
+    public function __construct() {
+        // Instanciar una conexión a la base de datos
+        $this->db = new Database();
+    }
     private $id;
     private $nombre;
     private $nombre_real;
